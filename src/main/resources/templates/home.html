@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head lang="pt-br">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./../css/bootstrap.min.css" />
+  </head>
+
+  <body>
+    <form
+      class="form-group col-6"
+      method="post"
+      action="./incluir"
+      style="padding: 10px;"
+    >
+      <div
+        class="alert alert-primary"
+        role="alert"
+        th:if="${!#strings.isEmpty(mensagem)}"
+      >
+        <span th:text="${mensagem}"></span>
+      </div>
+      <div class="form-group ">
+        <label for="textdescription">Descricao</label>
+        <input
+          type="text"
+          class="form-control"
+          id="textdescription"
+          aria-describedby="description"
+          name="description"
+        />
+      </div>
+      <div class="form-group">
+        <label for="dataVenc">Data de vencimento</label>
+        <input
+          type="text"
+          class="form-control"
+          id="dataVenc"
+          aria-describedby="dataVenc"
+          name="date"
+        />
+      </div>
+      <div class="form-group">
+        <label for="Valor">Valor</label>
+        <input
+          type="number"
+          class="form-control"
+          id="Valor"
+          aria-describedby="Valor"
+          name="value"
+        />
+      </div>
+      <div class="form-group  mb-3">
+        <label for="choice">Status</label>
+        <select
+          id="choice"
+          class="custom-select custom-select-sm col-3"
+          name="status"
+        >
+          <option
+            th:each="status:${statusEnum}"
+            th:value="${status}"
+            th:text="${status.description}"
+          ></option>
+        </select>
+      </div>
+      <input class="btn btn-primary" type="submit" />
+    </form>
+  </body>
+</html>
