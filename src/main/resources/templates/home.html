@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/home.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>Gerenciador de Eventos</div>
+        <ul>
+          <a href="/"><li>Home</li></a>
+          <a href="/casaDeShow"><li>Casa de Show</li></a>
+          <a href="/event"><li>Eventos</li></a>
+          <a href="/historic"><li>historico</li></a>
+        </ul>
+        <div>Logout</div>
+      </header>
+      <article>
+        <h1>Bem vindo user</h1>
+        <div th:each="event:${events}">
+          <div th:text="${event.eventName}"></div>
+          <div th:text="'Preço do ingresso:' + ' '+${event.price}"></div>
+          <div th:text="'Data:' + ' '+${{event.date}}"></div>
+          <div th:text="'Local:' + ' '+${event.partyHouse.name}"></div>
+          <div th:text="'Ingressos Restantes:' + ' '+${event.capacity}"></div>
+          <a th:href="@{./{id}(id=${event.id})}">Comprar</a>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

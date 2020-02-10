@@ -1,0 +1,41 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 20px 0px;
+}
+header > ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header > ul > a > li {
+  padding: 0 10px;
+  color: black;
+  font-weight: bold;
+}
+
+h1 {
+  text-align: center;
+}
+article > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  margin: 20px;
+  padding: 20px;
+}
+article > div > div:first-child {
+  font-weight: bold;
+}
+article > div > a {
+  background-color: black;
+  color: white;
+  width: 150px;
+  text-align: center;
+}
