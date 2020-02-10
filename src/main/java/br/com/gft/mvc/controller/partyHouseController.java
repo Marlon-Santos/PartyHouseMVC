@@ -20,17 +20,15 @@ public class partyHouseController {
     private PartyHouseRepository partyHouseRepository;
 
     @GetMapping
-    public String partyHouseView(){
-        for(PartyHouse test : partyHouseRepository.findAll()){
-            test.getEvent();
-        }
-        return "partyHouse";
+    public ModelAndView partyHouseView(){
+        ModelAndView mv  =  new ModelAndView("partyHouse");
+        return mv;
     }
 
     @PostMapping
-    public String save(PartyHouse partyHouse){
+    public RedirectView save(PartyHouse partyHouse){
         partyHouseRepository.save(partyHouse);
-        return "partyHouse";
+        return new RedirectView("http://localhost:8080/casaDeShow");
     }
 
     @GetMapping("{id}")
@@ -46,16 +44,13 @@ public class partyHouseController {
     @PostMapping("{id}")
     public RedirectView update(@PathVariable Long id, PartyHouse partyHouse){
         partyHouse.setId(id);
-        System.out.println(">>>>>>>>>>>>>>>"+partyHouse.getId());
         partyHouseRepository.save(partyHouse);
-        return new RedirectView("localhost:8080/event");
+        return new RedirectView("http://localhost:8080/casaDeShow");
+    }
+    @ModelAttribute("houses")
+    public List<PartyHouse> houses(){
+        List<PartyHouse> partyHouse = partyHouseRepository.findAll();
+        return partyHouse;
     }
 
-    @ModelAttribute("eventlist")
-    public List<String> test() {
-        List<String> listEvent = new ArrayList<>();
-        partyHouseRepository.findAll().get(0).getEvent().forEach(event->listEvent.add(event.getEventName()));
-        listEvent.forEach(i-> System.out.println(i));
-        return listEvent;
-    }
 }

@@ -1,30 +1,89 @@
 <!DOCTYPE html>
 <html>
-
-<head lang="pt-br">
+  <head lang="pt-br">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Editar Casa de Eventos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href=".././css/bootstrap.min.css" />
-</head>
+    <link rel="stylesheet" type="text/css" href=".././css/home.css" />
+  </head>
 
-<body>
-    <form class="form-group col-6" method="post" th:action="@{./{id}(id=${id})}" style="padding: 10px;">
-        <!-- <div class="alert alert-primary" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
-            <span th:text="${mensagem}"></span>
-        </div> -->
-        <div class="form-group ">
-            <label for="eventname">Nome da Casa de Show</label>
-            <input type="text" class="form-control" id="name" aria-describedby="name" name="name" th:value="${partyHouse.name}" />
-        </div>
-        <div class="form-group ">
-            <label for="capacity">Endereço</label>
-            <input type="text" class="form-control" id="address" aria-describedby="address" name="address" th:value="${partyHouse.address}" />
-        </div>
+  <body>
+    <header>
+      <div>Gerenciador de Eventos</div>
+      <ul>
+        <a href="/"><li>Home</li></a>
+        <a href="/casaDeShow"><li>Casa de Show</li></a>
+        <a href="/event"><li>Eventos</li></a>
+        <a href="/historic"><li>historico</li></a>
+      </ul>
+      <div>Logout</div>
+    </header>
+    <form
+      class="form-group col-6"
+      method="post"
+      th:action="@{./{id}(id=${id})}"
+      style="padding: 10px;"
+    >
+      <div class="form-group ">
+        <label for="eventname">Nome da Casa de Show</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          aria-describedby="name"
+          name="name"
+          th:value="${partyHouse.name}"
+        />
+      </div>
+      <div class="form-group ">
+        <label for="capacity">Endereço</label>
+        <input
+          type="text"
+          class="form-control"
+          id="address"
+          aria-describedby="address"
+          name="address"
+          th:value="${partyHouse.address}"
+        />
+      </div>
 
-        <input class="btn btn-primary" type="submit" />
+      <input class="btn btn-primary" type="submit" />
     </form>
-</body>
-
+    <footer>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Deletar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="house:${houses}">
+            <th scope="row" th:text="${house.id}"></th>
+            <td scope="row" th:text="${house.name}"></td>
+            <td scope="row" th:text="${house.address}"></td>
+            <td scope="row">
+              <a
+                th:href="@{http://localhost:8080/casaDeShow/{id}(id=${house.id})}"
+                ><button type="button" class="btn btn-info">Editar</button></a
+              >
+            </td>
+            <td scope="row">
+              <a
+                th:href="@{http://localhost:8080/casaDeShow/del/{id}(id=${house.id})}"
+                ><button type="button" class="btn btn-danger">
+                  Excluir
+                </button></a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </footer>
+  </body>
 </html>
