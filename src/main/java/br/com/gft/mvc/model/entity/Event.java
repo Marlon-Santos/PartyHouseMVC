@@ -11,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private Long id;
     @NotNull
@@ -19,7 +19,8 @@ public class Event {
     @NotNull
     private Integer capacity;
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date date;
     @NotNull
     @NumberFormat(pattern = "#,##0.00")
@@ -27,8 +28,21 @@ public class Event {
     @NotNull
     @Enumerated(EnumType.STRING)
     private MusicStyle musicStyle;
+    @NotNull
     @ManyToOne
     private PartyHouse partyHouse;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MusicStyle getMusicStyle() {
+        return musicStyle;
+    }
+
+    public void setMusicStyle(MusicStyle musicStyle) {
+        this.musicStyle = musicStyle;
+    }
 
     public Long getId() {
         return id;

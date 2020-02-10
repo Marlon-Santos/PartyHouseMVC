@@ -6,29 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Eventos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href=".././css/bootstrap.min.css" />
 </head>
 
 <body>
-    <form class="form-group col-6" method="post" action="./event" style="padding: 10px;">
+    <form class="form-group col-6" method="post" th:action="@{./{id}(id=${id})}" style="padding: 10px;">
         <!-- <div class="alert alert-primary" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
             <span th:text="${mensagem}"></span>
         </div> -->
         <div class="form-group ">
             <label for="eventname">Nome do Evento</label>
-            <input type="text" class="form-control" id="eventname" aria-describedby="eventname" name="eventName" />
+            <input type="text" class="form-control" id="eventname" aria-describedby="eventname" name="eventName" th:value="${event.eventName}" />
         </div>
         <div class="form-group ">
             <label for="capacity">Capacidade</label>
-            <input type="number" class="form-control" id="capacity" aria-describedby="capacity" name="capacity" />
+            <input type="number" class="form-control" id="capacity" aria-describedby="capacity" name="capacity" th:value="${event.capacity}" />
         </div>
         <div class="form-group">
             <label for="dataVenc">Data de vencimento</label>
-            <input type="text" class="form-control" id="dataVenc" aria-describedby="dataVenc" name="date" />
+            <input type="text" class="form-control" id="dataVenc" aria-describedby="dataVenc" name="date" th:value="${{event.date}}" />
         </div>
         <div class="form-group">
             <label for="Valor">Valor</label>
-            <input type="number" class="form-control" id="Valor" aria-describedby="Valor" name="price" />
+            <input type="number" class="form-control" id="Valor" aria-describedby="Valor" name="price" th:value="${event.price}" />
         </div>
         <div class="form-group  mb-3">
             <label for="choice">Estilo Musical</label>
@@ -37,6 +37,7 @@
             th:each="style:${musicStyle}"
             th:value="${style}"
             th:text="${style.musicStyle}"
+            th:selected="${event.musicStyle == style}"
           ></option>
         </select>
             <div class="form-group  mb-3">
@@ -46,6 +47,7 @@
             th:each="house:${partyHouse}"
             th:value="${house.id}"
             th:text="${house.name}"
+            th:selected="${event.partyHouse == house}"
           ></option>
         </select>
             </div>
