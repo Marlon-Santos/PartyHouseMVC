@@ -7,13 +7,21 @@
     <title>Eventos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href=".././css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href=".././css/home.css" />
 </head>
 
 <body>
+    <header>
+        <div>Gerenciador de Eventos</div>
+        <ul>
+          <a href="/"><li>Home</li></a>
+          <a href="/casaDeShow"><li>Casa de Show</li></a>
+          <a href="/event"><li>Eventos</li></a>
+          <a href="/historic"><li>historico</li></a>
+        </ul>
+        <div>Logout</div>
+      </header>
     <form class="form-group col-6" method="post" th:action="@{./{id}(id=${id})}" style="padding: 10px;">
-        <!-- <div class="alert alert-primary" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
-            <span th:text="${mensagem}"></span>
-        </div> -->
         <div class="form-group ">
             <label for="eventname">Nome do Evento</label>
             <input type="text" class="form-control" id="eventname" aria-describedby="eventname" name="eventName" th:value="${event.eventName}" />
