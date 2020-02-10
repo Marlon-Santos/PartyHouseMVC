@@ -1,5 +1,7 @@
 package br.com.gft.mvc.model.entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
@@ -8,17 +10,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "partyhouse")
 public class PartyHouse {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @NotNull
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @NotNull
     private Long id;
     @NotNull
     private String name;
     @NotNull
     private String address;
-    @OneToMany
+    @OneToMany(mappedBy = "partyHouse",cascade = CascadeType.ALL)
     private List<Event> event;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

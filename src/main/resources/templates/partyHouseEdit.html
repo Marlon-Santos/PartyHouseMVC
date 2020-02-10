@@ -4,28 +4,23 @@
 <head lang="pt-br">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Eventos</title>
+    <title>Editar Casa de Eventos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href=".././css/bootstrap.min.css" />
 </head>
 
 <body>
-    <div>
-        <div th:each=" event: ${eventlist}">
-            <div th:text="${event}"></div>
-        </div>
-    </div>
-    <form class="form-group col-6" method="post" action="./casaDeShow" style="padding: 10px;">
+    <form class="form-group col-6" method="post" th:action="@{./{id}(id=${id})}" style="padding: 10px;">
         <!-- <div class="alert alert-primary" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
             <span th:text="${mensagem}"></span>
         </div> -->
         <div class="form-group ">
             <label for="eventname">Nome da Casa de Show</label>
-            <input type="text" class="form-control" id="name" aria-describedby="name" name="name" />
+            <input type="text" class="form-control" id="name" aria-describedby="name" name="name" th:value="${partyHouse.name}" />
         </div>
         <div class="form-group ">
             <label for="capacity">Endereço</label>
-            <input type="text" class="form-control" id="address" aria-describedby="address" name="address" />
+            <input type="text" class="form-control" id="address" aria-describedby="address" name="address" th:value="${partyHouse.address}" />
         </div>
 
         <input class="btn btn-primary" type="submit" />
