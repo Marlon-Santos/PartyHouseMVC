@@ -41,15 +41,16 @@ public class eventController {
         return mv;
     }
 
+    @GetMapping("del/{id}")
+    public RedirectView delete(@PathVariable Long id){
+        eventRepository.delete(eventRepository.findById(id).get());
+        return new RedirectView("http://localhost:8080/event");
+    }
+
     @PostMapping
-    public String save(Event event) {
-        try{
+    public RedirectView save(Event event) {
         eventRepository.save(event);
-        }catch (Exception e){
-            System.out.println(e);
-        }finally {
-            return "event";
-        }
+       return new RedirectView("http://localhost:8080/event");
     }
     @PostMapping("{id}")
     public RedirectView edit(@PathVariable Long id, Event event) {
@@ -67,5 +68,9 @@ public class eventController {
         List<PartyHouse> name = new ArrayList<>() ;
         partyHouseRepository.findAll().forEach(partyHouse-> name.add(partyHouse));
          return name;
+    }
+    @ModelAttribute("events")
+    public List<Event> events() {
+        return eventRepository.findAll();
     }
 }

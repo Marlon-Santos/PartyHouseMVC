@@ -14,13 +14,21 @@
     <header>
         <div>Gerenciador de Eventos</div>
         <ul>
-          <a href="/"><li>Home</li></a>
-          <a href="/casaDeShow"><li>Casa de Show</li></a>
-          <a href="/event"><li>Eventos</li></a>
-          <a href="/historic"><li>historico</li></a>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/casaDeShow">
+                <li>Casa de Show</li>
+            </a>
+            <a href="/event">
+                <li>Eventos</li>
+            </a>
+            <a href="/historic">
+                <li>historico</li>
+            </a>
         </ul>
         <div>Logout</div>
-      </header>
+    </header>
     <form class="form-group col-6" method="post" th:action="@{./{id}(id=${id})}" style="padding: 10px;">
         <div class="form-group ">
             <label for="eventname">Nome do Evento</label>
@@ -61,6 +69,42 @@
             </div>
             <input class="btn btn-primary" type="submit" />
     </form>
+    <footer>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Evento</th>
+                    <th scope="col">Capacidade</th>
+                    <th scope="col">Vencimento</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Deletar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="event:${events}">
+                    <th scope="row" th:text="${event.id}"></th>
+                    <td scope="row" th:text="${event.eventName}"></td>
+                    <td scope="row" th:text="${event.capacity}"></td>
+                    <td scope="row" th:text="${{event.date}}"></td>
+                    <td scope="row" th:text="${event.price}"></td>
+                    <td scope="row">
+                        <a th:href="@{http://localhost:8080/event/{id}(id=${event.id})}"><button type="button" class="btn btn-info">Editar</button></a
+                >
+              </td>
+              <td scope="row">
+                <a
+                  th:href="@{http://localhost:8080/event/del/{id}(id=${event.id})}"
+                  ><button type="button" class="btn btn-danger">
+                    Excluir
+                  </button></a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </footer>
 </body>
 
 </html>
