@@ -41,6 +41,12 @@ public class partyHouseController {
         });
         return mv;
     }
+    @GetMapping("del/{id}")
+    public RedirectView delete(@PathVariable Long id){
+        partyHouseRepository.delete(partyHouseRepository.findById(id).get());
+        return new RedirectView("http://localhost:8080/casaDeShow");
+    }
+
     @PostMapping("{id}")
     public RedirectView update(@PathVariable Long id, PartyHouse partyHouse){
         partyHouse.setId(id);
