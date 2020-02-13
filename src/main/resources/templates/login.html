@@ -10,15 +10,16 @@
   </head>
   <body>
     <div class="mx-auto">
-      <form class="col-12">
+      <form class="col-12" th:action="@{/login}" method="POST">
         <fieldset class="shadow-lg p-6 mb-5 bg-white">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input
-              type="email"
+              type="name"
               class="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
+              name="username"
             />
           </div>
           <div class="form-group">
@@ -27,6 +28,7 @@
               type="password"
               class="form-control"
               id="exampleInputPassword1"
+              name="password"
             />
           </div>
           <button type="submit" class="btn btn-primary  btn-lg  btn-block">
