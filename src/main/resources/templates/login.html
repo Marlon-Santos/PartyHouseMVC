@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/login.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="mx-auto">
-      <form class="col-12" th:action="@{/login}" method="POST">
-        <fieldset class="shadow-lg p-6 mb-5 bg-white">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input
-              type="name"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              name="username"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-              name="password"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary  btn-lg  btn-block">
-            Login
-          </button>
-        </fieldset>
-      </form>
+        <form class="col-12" th:action="@{/login}" method="POST">
+            <fieldset class="shadow-lg p-6 mb-5 bg-white">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" />
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary  btn-lg  btn-block">
+                      Login
+                    </button>
+                    <button type="button" class="btn btn-primary  btn-lg  btn-block" onclick="window.location='http://localhost:8080/oauth2/authorization/google'">
+                    
+                    </button>
+                </div>
+            </fieldset>
+        </form>
     </div>
-  </body>
+</body>
+
 </html>

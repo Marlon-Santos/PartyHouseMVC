@@ -30,6 +30,7 @@ public class loginController {
     }
     @PostMapping("/loginCadastro")
     public RedirectView newUser(User user){
+        //fazer validacao c ja nao existe
         String bCrypt = new BCryptPasswordEncoder().encode(user.getPassword());
         System.out.println(bCrypt+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+user.getLogin());
         user.setPassword(bCrypt);

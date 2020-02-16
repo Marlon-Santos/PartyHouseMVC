@@ -24,10 +24,12 @@ class Security extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/login-error", "/css/**","/images/**")
                 .permitAll().anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
+                .and().oauth2Login().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
                 .and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll();
     }
-
+//.formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
+//                .and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll()
+//                .and()
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
