@@ -1,5 +1,5 @@
 form {
-    margin-top: 28vh;
+    margin-top: 15vh;
     filter: blur();
 }
 
@@ -31,14 +31,19 @@ body {
 button {
     text-align: center;
     font-size: 25px !important;
+    height: 50px !important;
 }
 
-button:last-child {
+#btnLoginGoogle {
     background-image: url("../images/googleSingIn.png");
     background-size: cover;
     background-position: center center;
     height: 50px;
     margin-top: 13px !important;
+}
+
+button:first-child {
+    background-color: blueviolet !important;
 }
 
 @media only screen and (max-width: 600px) {
