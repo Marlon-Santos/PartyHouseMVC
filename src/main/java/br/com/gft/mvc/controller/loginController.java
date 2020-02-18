@@ -31,7 +31,13 @@ public class loginController {
     }
     @GetMapping("/loginCadastro")
     public ModelAndView user(){
-        SendEmail sendEmail = new SendEmail("marlonergondossantos@gmail.com","subject test","testando envio de mensagem",javaMailSender);
+
+        SendEmail sendEmail = new SendEmail(
+                "partyhousemanagerphm@gmail.com",
+                "party house manager code activation",
+                "code to active your account: 665080",
+                javaMailSender);
+
         ModelAndView mv = new ModelAndView("loginCadastro");
         return mv;
     }

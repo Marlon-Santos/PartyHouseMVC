@@ -23,7 +23,7 @@ public class SendEmail {
         emailBody.setTo(emailAddress);
         emailBody.setSubject(subject);
         emailBody.setText(message);
-        
+
         try {
             mailSender.send(emailBody);
             return "email enviado com sucesso";
