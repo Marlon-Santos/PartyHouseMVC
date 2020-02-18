@@ -1,4 +1,4 @@
-package br.com.gft.mvc.security;
+package br.com.gft.mvc.service;
 
 import br.com.gft.mvc.model.entity.User;
 import br.com.gft.mvc.model.repository.UserRepository;
