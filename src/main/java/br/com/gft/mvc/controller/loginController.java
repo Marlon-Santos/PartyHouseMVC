@@ -1,5 +1,6 @@
 package br.com.gft.mvc.controller;
 
+import br.com.gft.mvc.enums.Roles;
 import br.com.gft.mvc.model.entity.User;
 import br.com.gft.mvc.model.repository.UserRepository;
 import br.com.gft.mvc.service.SendEmail;
@@ -23,20 +24,22 @@ public class loginController {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private JavaMailSender javaMailSender;
+//    @Autowired
+//    private JavaMailSender javaMailSender;
     @GetMapping("/login")
     public String login() {
+//        implementar add ADMIN pimeiro Acesso
+//    userRepository.findAllByRole(Roles.ADMIN).forEach(item-> System.out.println(item.getLogin()+">>>>>>>>>"+item.getRole()));
         return "login";
     }
     @GetMapping("/loginCadastro")
     public ModelAndView user(){
 
-        SendEmail sendEmail = new SendEmail(
-                "partyhousemanagerphm@gmail.com",
-                "party house manager code activation",
-                "code to active your account: 665080",
-                javaMailSender);
+//        SendEmail sendEmail = new SendEmail(
+//                "partyhousemanagerphm@gmail.com",
+//                "party house manager code activation",
+//                "code to active your account: 665080",
+//                javaMailSender);
 
         ModelAndView mv = new ModelAndView("loginCadastro");
         return mv;
