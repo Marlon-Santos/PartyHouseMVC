@@ -1,12 +1,19 @@
 package br.com.gft.mvc.model.entity;
 
+import br.com.gft.mvc.enums.Roles;
+import br.com.gft.mvc.model.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +25,17 @@ public class User implements UserDetails {
     private String name;
     @NotNull
     private String password;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Roles role = Roles.USER;
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
 
     public String getLogin() {
         return login;
@@ -54,7 +72,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getRole().getRole());
+        return Collections.singleton(authority);
     }
 
     @Override

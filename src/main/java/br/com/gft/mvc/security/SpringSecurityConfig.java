@@ -17,13 +17,16 @@ class Security extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/login", "/login-error","/loginCadastro", "/css/**","/images/**")
-                .permitAll().anyRequest().authenticated()
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers("/login", "/login-error", "/loginCadastro", "/css/**","/images/**").permitAll()
+                .antMatchers("/").hasAnyRole("ADMIN","USER")
+                .antMatchers("/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
                 .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll()
                 .and().oauth2Login().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
-                .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll();
+                .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll()
+                .and().httpBasic();
     }
 
     @Override
