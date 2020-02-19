@@ -28,7 +28,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Roles role = Roles.USER;
-
+    @NotNull
+    Integer isActive = 1;
     public Roles getRole() {
         return role;
     }
@@ -55,6 +56,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 
     @Override

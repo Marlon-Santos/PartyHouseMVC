@@ -22,35 +22,9 @@ import javax.security.auth.login.LoginContext;
 @Controller
 public class loginController {
 
-    @Autowired
-    private UserRepository userRepository;
-//    @Autowired
-//    private JavaMailSender javaMailSender;
     @GetMapping("/login")
     public String login() {
-//        implementar add ADMIN pimeiro Acesso
-//    userRepository.findAllByRole(Roles.ADMIN).forEach(item-> System.out.println(item.getLogin()+">>>>>>>>>"+item.getRole()));
         return "login";
     }
-    @GetMapping("/loginCadastro")
-    public ModelAndView user(){
 
-//        SendEmail sendEmail = new SendEmail(
-//                "partyhousemanagerphm@gmail.com",
-//                "party house manager code activation",
-//                "code to active your account: 665080",
-//                javaMailSender);
-
-        ModelAndView mv = new ModelAndView("loginCadastro");
-        return mv;
-    }
-    @PostMapping("/loginCadastro")
-    public RedirectView newUser(User user){
-        //fazer validacao c ja nao existe
-        String bCrypt = new BCryptPasswordEncoder().encode(user.getPassword());
-        System.out.println(bCrypt+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+user.getLogin());
-        user.setPassword(bCrypt);
-        userRepository.save(user);
-        return new RedirectView("http://localhost:8080/login");
-    }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head lang="pt-br">
+    <meta charset="utf-8" />
+    <title>Eventos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/login.css" />
+  </head>
+
+  
+<body>
+  <div class="mx-auto">
+      <form class="col-12" th:action="@{/}" method="GET">
+          <fieldset class="shadow-lg p-6 mb-5 bg-white">
+              <div class="form-group">
+                  <label>Your activation code was sent to: </label>
+                  <input class="form-control" type="text" placeholder="Readonly input here…" readonly th:value="${user.login}">
+              </div>
+              <div class="form-group">
+                  <label for="exampleInputPassword1">Code:</label>
+                  <input type="text" class="form-control" id="exampleInputPassword1" name="activator" />
+              </div>
+              <button type="submit" class="btn btn-primary  btn-lg  btn-block">
+                Validate code
+              </button>
+               </fieldset>
+      </form>
+  </div>
+</body>
+
+</html>
+</html>
