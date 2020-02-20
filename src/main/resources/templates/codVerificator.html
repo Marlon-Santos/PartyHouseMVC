@@ -16,11 +16,11 @@
           <fieldset class="shadow-lg p-6 mb-5 bg-white">
               <div class="form-group">
                   <label>Your activation code was sent to: </label>
-                  <input class="form-control" type="text" placeholder="Readonly input here…" readonly th:value="${user.login}" name="email">
+                  <input class="form-control" type="text" placeholder="Readonly input here…" readonly  th:value="${user.login}" name="login">
               </div>
               <div class="form-group">
                   <label for="exampleInputPassword1">Code:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" name="code" />
+                  <input  type="text" class="form-control" id="exampleInputPassword1" name="code" />
               </div>
               <button type="submit" class="btn btn-primary  btn-lg  btn-block">
                 Validate code

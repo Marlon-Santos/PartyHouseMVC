@@ -48,7 +48,7 @@ public class singUpController {
                 javaMailSender
         );
         String bCrypt = new BCryptPasswordEncoder().encode(user.getPassword());
-        activateCode.setEmail(user.getLogin());
+        activateCode.setLogin(user.getLogin());
         activateCode.setPassword(bCrypt);
         activateCode.setCode(id.toString());
         activateCode.setName(user.getName());
@@ -60,24 +60,23 @@ public class singUpController {
     }
 
     @PostMapping("/codVerificator")
-    public ModelAndView isValid(String email, String code, User user) {
-        ActivateCode activateCode = codeRepository.findByEmail(email);
+    public ModelAndView isValid(String login, String code, User user) {
+        ActivateCode activateCode = codeRepository.findByLogin(login);
         System.out.println(">>>>>>>>>>>>>>>>>>>.."+activateCode.getCode()+"=="+ code+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         if (activateCode.getCode().trim().equals(code.trim()) ){
-            user.setLogin(activateCode.getEmail());
+            user.setLogin(activateCode.getLogin());
             user.setName(activateCode.getName());
             user.setPassword(activateCode.getPassword());
             userRepository.save(user);
             System.out.println("code is valid!!!!");
         } else {
-            ModelAndView mv = new ModelAndView("redirect:/codVerificator.html");
-            mv.addObject("user", user);
-//            return new RedirectView("http://localhost:8080/codVerificator");
-//             new ModelMap("user",user);
+            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<ENTRou no elseeeeeeeeeeelse>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            ModelAndView mv = new ModelAndView("codVerificator");
+            mv.addObject("user", activateCode);
              return mv;
         }
         System.out.println("entrouuuuuuuuuuuuuuuuuuuuuuuuu");
-        return new ModelAndView("redirect:/codVerificator.html");
+        return new ModelAndView("redirect:/login.html");
 //        return "redirect:/login";
     }
 }

@@ -22,6 +22,10 @@
       </header>
       <article>
         <h1>Bem vindo user</h1>
+        <sec:authorize access="hasRole('ADMIN')">
+          This content will only be visible to users who have the "supervisor"
+          authority in their list of <tt>GrantedAuthority</tt>s.
+        </sec:authorize>
         <div th:each="event:${events}">
           <div th:text="${event.eventName}"></div>
           <div th:text="'Preço do ingresso:' + ' '+${event.price}"></div>

@@ -8,13 +8,11 @@ import java.util.Objects;
 @Entity
 public class ActivateCode {
     @Id
-    private String email;
+    private String login;
     private String code;
     private String password;
     private String name;
-    public String getEmail() {
-        return email;
-    }
+
 
     public String getName() {
         return name;
@@ -32,9 +30,6 @@ public class ActivateCode {
         this.password = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getCode() {
         return code;
@@ -42,6 +37,14 @@ public class ActivateCode {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
@@ -54,6 +57,7 @@ public class ActivateCode {
 
     @Override
     public int hashCode() {
-        return Objects.hash(email);
+        return Objects.hash(login);
     }
 }
+
