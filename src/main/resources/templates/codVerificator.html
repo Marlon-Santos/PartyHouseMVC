@@ -11,15 +11,16 @@
   
 <body>
   <div class="mx-auto">
-      <form class="col-12" th:action="@{/}" method="GET">
+      <form class="col-12" th:action="@{/codVerificator}" method="POST" >
+
           <fieldset class="shadow-lg p-6 mb-5 bg-white">
               <div class="form-group">
                   <label>Your activation code was sent to: </label>
-                  <input class="form-control" type="text" placeholder="Readonly input here…" readonly th:value="${user.login}">
+                  <input class="form-control" type="text" placeholder="Readonly input here…" readonly th:value="${user.login}" name="email">
               </div>
               <div class="form-group">
                   <label for="exampleInputPassword1">Code:</label>
-                  <input type="text" class="form-control" id="exampleInputPassword1" name="activator" />
+                  <input type="text" class="form-control" id="exampleInputPassword1" name="code" />
               </div>
               <button type="submit" class="btn btn-primary  btn-lg  btn-block">
                 Validate code
