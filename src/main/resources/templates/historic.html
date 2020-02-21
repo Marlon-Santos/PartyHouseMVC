@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/home.css" />
+  </head>
+
+  <body>
+    <main>
+      <header sec:authorize="hasRole('ADMIN')">
+        <div>Gerenciador de Eventos</div>
+        <ul>
+          <a href="/">
+            <li>Home</li>
+          </a>
+          <a href="/casaDeShow">
+            <li>Casa de Show</li>
+          </a>
+          <a href="/event">
+            <li>Eventos</li>
+          </a>
+          <a href="/historic">
+            <li>historico</li>
+          </a>
+        </ul>
+        <a href="/logout">
+          <div>Logout</div>
+        </a>
+      </header>
+      <header sec:authorize="hasRole('USER')">
+        <div>Gerenciador de Eventos</div>
+        <ul>
+          <a href="/">
+            <li>Home</li>
+          </a>
+          <a href="/historic">
+            <li>historico</li>
+          </a>
+        </ul>
+        <a href="/logout">
+          <div>Logout</div>
+        </a>
+      </header>
+        <h1>test historic</h1>
+    </main>
+  </body>
+</html>

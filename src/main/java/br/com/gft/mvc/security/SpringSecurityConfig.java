@@ -19,7 +19,7 @@ class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/login/**", "/login-error","/codVerificator/**", "/singUp/**", "/css/**","/images/**").permitAll()
-                .antMatchers("/","/sales").hasAnyRole("ADMIN","USER")
+                .antMatchers("/","/sales","/historic").hasAnyRole("ADMIN","USER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
@@ -31,6 +31,10 @@ class Security extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin@gft.com").password("{noop}gft").roles("ADMIN");
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
+
 }

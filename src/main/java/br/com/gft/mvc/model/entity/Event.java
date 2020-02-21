@@ -6,6 +6,7 @@ import org.springframework.format.annotation.NumberFormat;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +33,8 @@ public class Event {
     @NotNull
     @ManyToOne
     private PartyHouse partyHouse;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<HistoricUser> historicUser;
 
     public void setId(Long id) {
         this.id = id;

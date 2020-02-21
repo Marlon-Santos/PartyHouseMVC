@@ -79,30 +79,67 @@
                   onclick="console.dir(this.parentNode.parentNode.style.display = 'none')"
                   >&times;</span
                 >
-                <form class="col-12" th:action="@{/sales}"style="text-align:center;" method="POST">
-                <fieldset>
-                    <div>
-                        <input type="hidden" name="id" th:value="${event.id}"/>
-                        <div th:text="'Nome do evento:'+ ${event.eventName} "></div>
-                        <div
-                          th:text=" 'Preço do ingresso:' + ' '+${#numbers.formatDecimal(event.price,2,2, 'COMMA')} "
-                        ></div>
-                        <div th:text="'Data:'+ ${#dates.format(event.date, 'dd/MM/yyyy')} "></div>
-                        <div th:text=" 'Local:' + ' '+${event.partyHouse.name} "></div>
-                        <div
-                          th:text=" 'Ingressos Restantes:' + ' '+${event.capacity} "
-                        ></div>
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="inputGroup-sizing-sm">Quantidade de ingressos</span>
-                            </div>
-                            <input type="number" class="form-control" aria-label="Small" required aria-describedby="inputGroup-sizing-sm" name="qtd">
-                          </div>
+                <form
+                  class="col-12"
+                  th:action="@{/historic}"
+                  style="text-align:center;"
+                  method="POST"
+                >
+                  <fieldset>
+                    <input type="hidden" name="idd" th:value="${event.id}" />
+                    <label>Nome do evento:</label>
+                    <input
+                      type="text"
+                      class="btn btn-lg  btn-block"
+                      th:value="${event.eventName}"
+                      name="eventName"
+                    />
+                    <label>preço do ingresso:</label>
+                    <input
+                      type="text"
+                      class="btn btn-lg  btn-block"
+                      th:value="${#numbers.formatDecimal(event.price,2,2, 'COMMA')}"
+                      name="price"
+                    />
+                    <label>Data:</label>
+                    <input
+                      type="date"
+                      class="btn btn-lg  btn-block"
+                      th:value="${#dates.format(event.date, 'dd/MM/yyyy')}"
+                      name="date"
+                    />
+                    <label>Nome da casa de show:</label>
+                    <input
+                      type="text"
+                      class="btn btn-lg  btn-block"
+                      th:value="${event.partyHouse.name}"
+                      name="partyHouseName"
+                    />
+                    <label>Quantidade de ingressos restantes:</label>
+                    <input
+                      type="number"
+                      class="btn btn-lg  btn-block"
+                      th:value="${event.capacity}"
+                    />
+                    <div class="input-group input-group-sm mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm"
+                          >Quantidade de ingressos</span
+                        >
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        aria-label="Small"
+                        required
+                        aria-describedby="inputGroup-sizing-sm"
+                        name="qtd"
+                      />
+                    </div>
                     <button
                       style="display: block;margin: 0 auto; text-decoration: none;"
-                      type="form"
+                      type="submit"
                       class="btn btn-block btn-primary "
-                      
                     >
                       Comprar
                     </button>
