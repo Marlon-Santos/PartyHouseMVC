@@ -20,7 +20,7 @@ public class Event {
     private Integer capacity;
     @NotNull
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     @NotNull
     @NumberFormat(pattern = "#,##0.00")
@@ -28,6 +28,7 @@ public class Event {
     @NotNull
     @Enumerated(EnumType.STRING)
     private MusicStyle musicStyle;
+    private String link;
     @NotNull
     @ManyToOne
     private PartyHouse partyHouse;
@@ -58,6 +59,14 @@ public class Event {
 
     public Integer getCapacity() {
         return capacity;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public void setCapacity(Integer capacity) {

@@ -6,15 +6,19 @@ import br.com.gft.mvc.model.entity.PartyHouse;
 import br.com.gft.mvc.model.repository.EventRepository;
 import br.com.gft.mvc.model.repository.PartyHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/event")
@@ -48,7 +52,7 @@ public class eventController {
     }
 
     @PostMapping
-    public RedirectView save(Event event) {
+    public RedirectView save(Event event)  {
         eventRepository.save(event);
        return new RedirectView("http://localhost:8080/event");
     }
@@ -72,5 +76,9 @@ public class eventController {
     @ModelAttribute("events")
     public List<Event> events() {
         return eventRepository.findAll();
+    }
+    @ModelAttribute("hasHouse")
+    public List<PartyHouse> partyHouses() {
+        return partyHouseRepository.findAll();
     }
 }

@@ -1,132 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head lang="pt-br">
+
+<head lang="pt-br">
     <meta charset="utf-8" />
     <title>Eventos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/home.css" />
-  </head>
+</head>
 
-  <body>
+<body>
+
     <header>
-      <div>Gerenciador de Eventos</div>
-      <ul>
-        <a href="/">
-          <li>Home</li>
+        <div>Gerenciador de Eventos</div>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/casaDeShow">
+                <li>Casa de Show</li>
+            </a>
+            <a href="/event">
+                <li>Eventos</li>
+            </a>
+            <a href="/historic">
+                <li>historico</li>
+            </a>
+        </ul>
+        <a href="/logout">
+            <div>Logout</div>
         </a>
-        <a href="/casaDeShow">
-          <li>Casa de Show</li>
-        </a>
-        <a href="/event">
-          <li>Eventos</li>
-        </a>
-        <a href="/historic">
-          <li>historico</li>
-        </a>
-      </ul>
-      <div>Logout</div>
     </header>
-    <form
-      class="form-group col-6"
-      method="post"
-      action="./event"
-      style="padding: 10px;"
-    >
-      <div class="form-group ">
-        <label for="eventname">Nome do Evento</label>
-        <input
-          type="text"
-          class="form-control"
-          id="eventname"
-          aria-describedby="eventname"
-          name="eventName"
-        />
-      </div>
-      <div class="form-group ">
-        <label for="capacity">Capacidade</label>
-        <input
-          type="number"
-          class="form-control"
-          id="capacity"
-          aria-describedby="capacity"
-          name="capacity"
-        />
-      </div>
-      <div class="form-group">
-        <label for="dataVenc">Data de vencimento</label>
-        <input
-          type="text"
-          class="form-control"
-          id="dataVenc"
-          aria-describedby="dataVenc"
-          name="date"
-        />
-      </div>
-      <div class="form-group">
-        <label for="Valor">Valor</label>
-        <input
-          type="number"
-          class="form-control"
-          id="Valor"
-          aria-describedby="Valor"
-          name="price"
-        />
-      </div>
-      <div class="form-group  mb-3">
-        <label for="choice">Estilo Musical</label>
-        <select
-          id="choice"
-          class="custom-select custom-select-sm col-3"
-          name="musicStyle"
-        >
+    <main th:if="${!#lists.isEmpty(hasHouse)}">
+        <form class="form-group col-6" method="post" action="./event" style="padding: 10px;">
+            <div class="form-group ">
+                <label for="eventname">Nome do Evento</label>
+                <input type="text" class="form-control" id="eventname" aria-describedby="eventname" required name="eventName" />
+            </div>
+            <div class="form-group ">
+                <label for="capacity">Capacidade</label>
+                <input type="number" class="form-control" id="capacity" aria-describedby="capacity" required name="capacity" />
+            </div>
+            <div class="form-group">
+                <label for="dataVenc">Data de vencimento</label>
+                <input type="date" class="form-control" id="dataVenc" aria-describedby="dataVenc" required name="date" />
+            </div>
+            <div class="form-group">
+                <label for="Valor">Valor</label>
+                <input type="number" class="form-control" id="Valor" aria-describedby="Valor" required pattern="[0-9]+([,\.][0-9]+)?" min="0" step="any" name="price" />
+
+            </div>
+            <div class="form-group">
+                <label for="link">Link da imagem de background</label>
+                <input type="url" class="form-control" id="link" aria-describedby="link" name="link" />
+
+            </div>
+            <div class="form-group  mb-3">
+                <label for="choice">Estilo Musical</label>
+                <select id="choice" class="custom-select custom-select-sm col-3" required name="musicStyle">
           <option
             th:each="style:${musicStyle}"
             th:value="${style}"
             th:text="${style.musicStyle}"
           ></option>
         </select>
-      </div>
-      <div class="form-group  mb-3">
-        <label for="choice01">Casa de Show</label>
-        <select
-          id="choice01"
-          class="custom-select custom-select-sm col-3"
-          name="partyHouse"
-        >
+            </div>
+            <div class="form-group  mb-3">
+                <label for="choice01">Casa de Show</label>
+                <select id="choice01" class="custom-select custom-select-sm col-3" required name="partyHouse">
           <option
             th:each="house:${partyHouse}"
             th:value="${house.id}"
             th:text="${house.name}"
           ></option>
         </select>
-      </div>
-      <input class="btn btn-primary" type="submit" />
-    </form>
-    <span></span>
-    <footer>
-      <table class="table" style="width: 100%;">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Evento</th>
-            <th scope="col">Capacidade</th>
-            <th scope="col">Vencimento</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Deletar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="event:${events}">
-            <th scope="row" th:text="${event.id}"></th>
-            <td scope="row" th:text="${event.eventName}"></td>
-            <td scope="row" th:text="${event.capacity}"></td>
-            <td scope="row" th:text="${{event.date}}"></td>
-            <td scope="row" th:text="${event.price}"></td>
-            <td scope="row">
-              <a th:href="@{http://localhost:8080/event/{id}(id=${event.id})}"
-                ><button type="button" class="btn btn-info">Editar</button></a
+            </div>
+            <input class="btn btn-primary" type="submit" />
+        </form>
+        <span></span>
+        <footer>
+            <table class="table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Evento</th>
+                        <th scope="col">Capacidade</th>
+                        <th scope="col">Vencimento</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Link</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Deletar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="event:${events}">
+                        <th scope="row" th:text="${event.id}"></th>
+                        <td scope="row" th:text="${event.eventName}"></td>
+                        <td scope="row" th:text="${event.capacity}"></td>
+                        <td scope="row" th:text="${#dates.format(event.date, 'dd/MM/yyyy')}"></td>
+                        <td scope="row" th:text="${#numbers.formatDecimal(event.price,2,2,'COMMA')}"></td>
+                        <td scope="row" th:text="url..."></td>
+                        <td scope="row">
+                            <a th:href="@{http://localhost:8080/event/{id}(id=${event.id})}"><button type="button" class="btn btn-info">Editar</button></a
               >
             </td>
             <td scope="row">
@@ -141,5 +116,7 @@
         </tbody>
       </table>
     </footer>
+  </main>
+  <div th:if="${#lists.isEmpty(hasHouse)}">TESTE</div>
   </body>
 </html>
