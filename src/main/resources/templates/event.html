@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label for="Valor">Valor</label>
-                <input type="number" class="form-control" id="Valor" aria-describedby="Valor" required pattern="[0-9]+([,\.][0-9]+)?" min="0" step="any" name="price" />
+                <input type="text" class="form-control" id="Valor" aria-describedby="Valor" required pattern="\d+(,\d\d)?" name="price" />
 
             </div>
             <div class="form-group">
@@ -117,6 +117,10 @@
       </table>
     </footer>
   </main>
-  <div th:if="${#lists.isEmpty(hasHouse)}">TESTE</div>
+  <div th:if="${#lists.isEmpty(hasHouse)}">
+      <div class="alert alert-warning" style="text-align:center" role="alert">
+      Você precisa cadastrar uma casa de show para visualizar esta pagina !!!
+  </div>
+  </div>
   </body>
 </html>

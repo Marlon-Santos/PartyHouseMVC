@@ -19,7 +19,7 @@ class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/login/**", "/login-error","/codVerificator/**", "/singUp/**", "/css/**","/images/**").permitAll()
-                .antMatchers("/").hasAnyRole("ADMIN","USER")
+                .antMatchers("/","/sales").hasAnyRole("ADMIN","USER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()

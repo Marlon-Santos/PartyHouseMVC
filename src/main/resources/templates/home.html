@@ -1,86 +1,119 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/home.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <main>
-        <header sec:authorize="hasRole('ADMIN')">
-            <div>Gerenciador de Eventos</div>
-            <ul>
-                <a href="/">
-                    <li>Home</li>
-                </a>
-                <a href="/casaDeShow">
-                    <li>Casa de Show</li>
-                </a>
-                <a href="/event">
-                    <li>Eventos</li>
-                </a>
-                <a href="/historic">
-                    <li>historico</li>
-                </a>
-            </ul>
-            <a href="/logout">
-                <div>Logout</div>
-            </a>
-        </header>
-        <header sec:authorize="hasRole('USER')">
-            <div>Gerenciador de Eventos</div>
-            <ul>
-                <a href="/">
-                    <li>Home</li>
-                </a>
-                <a href="/historic">
-                    <li>historico</li>
-                </a>
-            </ul>
-            <a href="/logout">
-                <div>Logout</div>
-            </a>
-        </header>
-        <article>
-            <h1>Bem vindo <span sec:authentication="name"></span></h1>
-            <div th:each="event:${events}" th:style="'background:url('+ ${event.link} +');background-repeat:repeat-x;background-size:contain'">
+      <header sec:authorize="hasRole('ADMIN')">
+        <div>Gerenciador de Eventos</div>
+        <ul>
+          <a href="/">
+            <li>Home</li>
+          </a>
+          <a href="/casaDeShow">
+            <li>Casa de Show</li>
+          </a>
+          <a href="/event">
+            <li>Eventos</li>
+          </a>
+          <a href="/historic">
+            <li>historico</li>
+          </a>
+        </ul>
+        <a href="/logout">
+          <div>Logout</div>
+        </a>
+      </header>
+      <header sec:authorize="hasRole('USER')">
+        <div>Gerenciador de Eventos</div>
+        <ul>
+          <a href="/">
+            <li>Home</li>
+          </a>
+          <a href="/historic">
+            <li>historico</li>
+          </a>
+        </ul>
+        <a href="/logout">
+          <div>Logout</div>
+        </a>
+      </header>
+      <article>
+        <h1>Bem vindo <span sec:authentication="name"></span></h1>
+        <div
+          th:each="event:${events}"
+          th:style="'background:url('+ ${event.link} +');background-repeat:repeat-x;background-size:contain'"
+          class="di"
+        >
+          <div>
+            <div th:text="${event.eventName} "></div>
+            <div
+              th:text=" 'Preço do ingresso:' + ' '+${#numbers.formatDecimal(event.price,2,2, 'COMMA')} "
+            ></div>
+            <div th:text="${#dates.format(event.date, 'dd/MM/yyyy')} "></div>
+            <div th:text=" 'Local:' + ' '+${event.partyHouse.name} "></div>
+            <div
+              th:text=" 'Ingressos Restantes:' + ' '+${event.capacity} "
+            ></div>
+            <button
+              id="myBtn"
+              class="btn btn-primary"
+              onclick="console.dir(this.nextElementSibling.style.display = 'block')"
+            >
+              Comprar
+            </button>
 
-                <div>
-                    <div th:text="${event.eventName} "></div>
-                    <div th:text=" 'Preço do ingresso:' + ' '+${#numbers.formatDecimal(event.price,2,2, 'COMMA')} "></div>
-                    <div th:text="${#dates.format(event.date, 'dd/MM/yyyy')} "></div>
-                    <div th:text=" 'Local:' + ' '+${event.partyHouse.name} "></div>
-                    <div th:text=" 'Ingressos Restantes:' + ' '+${event.capacity} "></div>
-                    <!-- <a th:href="@{./{id}(id=${event.id})} ">Comprar</a> -->
-                    <!--  -->
-                    <!-- Trigger/Open The Modal -->
-                    <button id="myBtn" class="btn btn-primary" onclick="console.dir(this.nextElementSibling.style.display = 'block')">Comprar</button>
-
-                    <!-- The Modal -->
-                    <div id="myModal" class="modal">
-
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                            <span class="close" onclick="console.dir(this.parentNode.parentNode.style.display = 'none')">&times;</span>
-                            <p>Your Contents</p>
-                            <div th:text="${event.eventName} "></div>
-                            <div th:text=" 'Preço do ingresso:' + ' '+${#numbers.formatDecimal(event.price,2,2, 'COMMA')} "></div>
-                            <div th:text="${#dates.format(event.date, 'dd/MM/yyyy')} "></div>
-                            <div th:text=" 'Local:' + ' '+${event.partyHouse.name} "></div>
-                            <div th:text=" 'Ingressos Restantes:' + ' '+${event.capacity} "></div>
-                            <a th:href="@{./{id}(id=${event.id})} ">Comprar</a>
-                        </div>
-
-                    </div>
-                    <!--  -->
-                </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span
+                  class="close"
+                  onclick="console.dir(this.parentNode.parentNode.style.display = 'none')"
+                  >&times;</span
+                >
+                <form class="col-12" th:action="@{/sales}"style="text-align:center;" method="POST">
+                <fieldset>
+                    <div>
+                        <input type="hidden" name="id" th:value="${event.id}"/>
+                        <div th:text="'Nome do evento:'+ ${event.eventName} "></div>
+                        <div
+                          th:text=" 'Preço do ingresso:' + ' '+${#numbers.formatDecimal(event.price,2,2, 'COMMA')} "
+                        ></div>
+                        <div th:text="'Data:'+ ${#dates.format(event.date, 'dd/MM/yyyy')} "></div>
+                        <div th:text=" 'Local:' + ' '+${event.partyHouse.name} "></div>
+                        <div
+                          th:text=" 'Ingressos Restantes:' + ' '+${event.capacity} "
+                        ></div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="inputGroup-sizing-sm">Quantidade de ingressos</span>
+                            </div>
+                            <input type="number" class="form-control" aria-label="Small" required aria-describedby="inputGroup-sizing-sm" name="qtd">
+                          </div>
+                    <button
+                      style="display: block;margin: 0 auto; text-decoration: none;"
+                      type="form"
+                      class="btn btn-block btn-primary "
+                      
+                    >
+                      Comprar
+                    </button>
+                  </fieldset>
+                </form>
+              </div>
             </div>
-        </article>
+            <!--  -->
+          </div>
+        </div>
+      </article>
     </main>
 
     <!-- <script>
@@ -112,6 +145,5 @@
             }
         }
     </script> -->
-</body>
-
+  </body>
 </html>
