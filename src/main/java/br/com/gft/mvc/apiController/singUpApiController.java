@@ -1,4 +1,4 @@
-package br.com.gft.mvc.controller;
+package br.com.gft.mvc.apiController;
 
 import br.com.gft.mvc.model.entity.ActivateCode;
 import br.com.gft.mvc.model.entity.User;
@@ -9,17 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
 
-@Controller
-public class singUpController {
+@RestController
+@RequestMapping("/api")
+public class singUpApiController {
     @Autowired
     private UserRepository userRepository;
     @Autowired

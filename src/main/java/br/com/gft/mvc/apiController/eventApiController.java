@@ -1,37 +1,33 @@
-package br.com.gft.mvc.controller;
+package br.com.gft.mvc.apiController;
 
+import br.com.gft.mvc.apiController.dto.EventDto;
 import br.com.gft.mvc.enums.MusicStyle;
 import br.com.gft.mvc.model.entity.Event;
 import br.com.gft.mvc.model.entity.PartyHouse;
 import br.com.gft.mvc.model.repository.EventRepository;
 import br.com.gft.mvc.model.repository.PartyHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
-@Controller
-@RequestMapping("/event")
-public class eventController {
+@RestController
+@RequestMapping("/api/eventos")
+public class eventApiController {
     @Autowired
     private EventRepository eventRepository;
     @Autowired
     private PartyHouseRepository partyHouseRepository;
 
     @GetMapping
-    public ModelAndView home() {
-        ModelAndView mv = new ModelAndView("event");
-        return mv;
+    public List<EventDto> eventList() {
+        List<Event> events = eventRepository.findAll();
+        return EventDto.converter(events);
     }
 
     @GetMapping("{id}")
@@ -63,22 +59,4 @@ public class eventController {
         return new RedirectView("http://localhost:8080/event");
     }
 
-    @ModelAttribute("musicStyle")
-    public List<MusicStyle> musicStyle() {
-        return Arrays.asList(MusicStyle.values());
-    }
-    @ModelAttribute("partyHouse")
-    public List<PartyHouse> partyHouse() {
-        List<PartyHouse> name = new ArrayList<>() ;
-        partyHouseRepository.findAll().forEach(partyHouse-> name.add(partyHouse));
-         return name;
-    }
-    @ModelAttribute("events")
-    public List<Event> events() {
-        return eventRepository.findAll();
-    }
-    @ModelAttribute("hasHouse")
-    public List<PartyHouse> partyHouses() {
-        return partyHouseRepository.findAll();
-    }
 }

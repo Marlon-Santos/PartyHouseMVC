@@ -1,4 +1,4 @@
-package br.com.gft.mvc.controller;
+package br.com.gft.mvc.mvcController;
 
 
 import br.com.gft.mvc.model.entity.PartyHouse;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
