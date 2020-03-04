@@ -3,6 +3,7 @@ package br.com.gft.mvc.model.entity;
 import br.com.gft.mvc.enums.MusicStyle;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -32,6 +33,19 @@ public class Event {
     @NotNull
     @ManyToOne
     private PartyHouse partyHouse;
+
+    public Event() {
+    }
+
+    public Event(String eventName, Integer capacity, Date date, Double price, MusicStyle musicStyle, String link, PartyHouse partyHouse) {
+        this.eventName = eventName;
+        this.capacity = capacity;
+        this.date = date;
+        this.price = price;
+        this.musicStyle = musicStyle;
+        this.link = link;
+        this.partyHouse = partyHouse;
+    }
 
     public void setId(Long id) {
         this.id = id;

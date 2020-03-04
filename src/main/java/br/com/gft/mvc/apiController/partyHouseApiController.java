@@ -1,6 +1,5 @@
 package br.com.gft.mvc.apiController;
 
-
 import br.com.gft.mvc.apiController.dto.PartyHouseDto;
 import br.com.gft.mvc.apiController.form.PartyHouseForm;
 import br.com.gft.mvc.model.entity.PartyHouse;
@@ -38,13 +37,33 @@ public class partyHouseApiController {
         }
     }
 
+    @GetMapping("/nome/{name}")
+    public PartyHouseDto findByName(@PathVariable String name) {
+        Optional<PartyHouse> partyHouse = partyHouseRepository.findByName(name);
+        if (partyHouse.isPresent()) {
+            return new PartyHouseDto(partyHouse.get());
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/asc")
+    public List<PartyHouseDto> findAllByAsc() {
+        List<PartyHouse> partyHouse = partyHouseRepository.findAllByOrderByNameAsc();
+        return PartyHouseDto.converter(partyHouse);
+    }
+
+    @GetMapping("/desc")
+    public List<PartyHouseDto> findAllByDesc() {
+        List<PartyHouse> partyHouse = partyHouseRepository.findAllByOrderByNameDesc();
+        return PartyHouseDto.converter(partyHouse);
+    }
+
     @PostMapping
     @Transactional
     public ResponseEntity<PartyHouseDto> save(@RequestBody @Valid PartyHouseForm partyHouseForm, UriComponentsBuilder uriBuilder) {
         PartyHouse partyHouse = partyHouseForm.converter();
-        System.out.println(partyHouse.getId() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         partyHouseRepository.save(partyHouse);
-        System.out.println(partyHouse.getId() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         URI uri = uriBuilder.path("{id}").buildAndExpand(partyHouse.getId()).toUri();
         return ResponseEntity.created(uri).body(new PartyHouseDto(partyHouse));
     }
@@ -54,5 +73,16 @@ public class partyHouseApiController {
     public ResponseEntity<PartyHouseDto> update(@PathVariable Long id, @RequestBody @Valid PartyHouseForm partyHouseForm) {
         PartyHouseDto partyHouseDto = partyHouseForm.update(id, partyHouseRepository);
         return ResponseEntity.ok(partyHouseDto);
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<PartyHouse> partyHouse = partyHouseRepository.findById(id);
+        if (partyHouse.isPresent()) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
