@@ -69,15 +69,11 @@ public class singUpApiController {
             user.setName(activateCode.getName());
             user.setPassword(activateCode.getPassword());
             userRepository.save(user);
-            System.out.println("code is valid!!!!");
         } else {
-            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<ENTRou no elseeeeeeeeeeelse>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             ModelAndView mv = new ModelAndView("codVerificator");
             mv.addObject("user", activateCode);
              return mv;
         }
-        System.out.println("entrouuuuuuuuuuuuuuuuuuuuuuuuu");
         return new ModelAndView("redirect:/login.html");
-//        return "redirect:/login";
     }
 }

@@ -48,6 +48,7 @@ public class eventApiController {
         eventRepository.save(event);
        return new RedirectView("http://localhost:8080/event");
     }
+
     @PostMapping("{id}")
     public RedirectView edit(@PathVariable Long id, Event event) {
         event.setId(id);

@@ -1,5 +1,6 @@
 package br.com.gft.mvc.mvcController;
 
+import br.com.gft.mvc.enums.MusicStyle;
 import br.com.gft.mvc.model.entity.Event;
 import br.com.gft.mvc.model.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class homeController {
         ModelAndView mv = new ModelAndView("home");
         List<Event> event = eventRepository.findAll();
         mv.addObject("events", event);
+//        MusicStyle.valueOf("musicStyle");
+        for(MusicStyle test : MusicStyle.values()){
+            System.out.println(test.getMusicStyle());
+        };
         return mv;
     }
 
