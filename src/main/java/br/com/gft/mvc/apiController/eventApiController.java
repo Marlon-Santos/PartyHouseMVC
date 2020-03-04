@@ -1,9 +1,7 @@
 package br.com.gft.mvc.apiController;
 
 import br.com.gft.mvc.apiController.dto.EventDto;
-import br.com.gft.mvc.enums.MusicStyle;
 import br.com.gft.mvc.model.entity.Event;
-import br.com.gft.mvc.model.entity.PartyHouse;
 import br.com.gft.mvc.model.repository.EventRepository;
 import br.com.gft.mvc.model.repository.PartyHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

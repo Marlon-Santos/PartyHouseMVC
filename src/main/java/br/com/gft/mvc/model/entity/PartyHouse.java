@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "partyhouse")
 public class PartyHouse {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @NotNull
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
     private String name;
@@ -18,6 +18,14 @@ public class PartyHouse {
     private String address;
     @OneToMany(mappedBy = "partyHouse",cascade = CascadeType.ALL)
     private List<Event> event;
+
+    public PartyHouse() {
+    }
+
+    public PartyHouse(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
     public Long getId() {
         return id;

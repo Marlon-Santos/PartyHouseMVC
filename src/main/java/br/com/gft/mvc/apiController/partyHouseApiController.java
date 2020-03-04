@@ -1,13 +1,18 @@
 package br.com.gft.mvc.apiController;
 
 
+import br.com.gft.mvc.apiController.dto.PartyHouseDto;
+import br.com.gft.mvc.apiController.form.PartyHouseForm;
 import br.com.gft.mvc.model.entity.PartyHouse;
 import br.com.gft.mvc.model.repository.PartyHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,43 +23,36 @@ public class partyHouseApiController {
     private PartyHouseRepository partyHouseRepository;
 
     @GetMapping
-    public List<PartyHouse> partyHouseList(){
+    public List<PartyHouseDto> partyHouseList() {
         List<PartyHouse> partyHouseList = partyHouseRepository.findAll();
-        return partyHouseList;
-    }
-
-    @PostMapping
-    public RedirectView save(PartyHouse partyHouse){
-        partyHouseRepository.save(partyHouse);
-        return new RedirectView("http://localhost:8080/casaDeShow");
+        return PartyHouseDto.converter(partyHouseList);
     }
 
     @GetMapping("{id}")
-    public ModelAndView update(@PathVariable Long id){
+    public PartyHouseDto findById(@PathVariable Long id) {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findById(id);
-        ModelAndView mv = new ModelAndView("partyHouseEdit");
-        partyHouse.ifPresent(partyHouse1 -> {
-            mv.addObject("partyHouse",partyHouse1);
-            mv.addObject("id",id);
-        });
-        return mv;
-    }
-    @GetMapping("del/{id}")
-    public RedirectView delete(@PathVariable Long id){
-        partyHouseRepository.delete(partyHouseRepository.findById(id).get());
-        return new RedirectView("http://localhost:8080/casaDeShow");
+        if (partyHouse.isPresent()) {
+            return new PartyHouseDto(partyHouse.get());
+        } else {
+            return null;
+        }
     }
 
-    @PostMapping("{id}")
-    public RedirectView update(@PathVariable Long id, PartyHouse partyHouse){
-        partyHouse.setId(id);
+    @PostMapping
+    @Transactional
+    public ResponseEntity<PartyHouseDto> save(@RequestBody @Valid PartyHouseForm partyHouseForm, UriComponentsBuilder uriBuilder) {
+        PartyHouse partyHouse = partyHouseForm.converter();
+        System.out.println(partyHouse.getId() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         partyHouseRepository.save(partyHouse);
-        return new RedirectView("http://localhost:8080/casaDeShow");
-    }
-    @ModelAttribute("houses")
-    public List<PartyHouse> houses(){
-        List<PartyHouse> partyHouse = partyHouseRepository.findAll();
-        return partyHouse;
+        System.out.println(partyHouse.getId() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        URI uri = uriBuilder.path("{id}").buildAndExpand(partyHouse.getId()).toUri();
+        return ResponseEntity.created(uri).body(new PartyHouseDto(partyHouse));
     }
 
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity<PartyHouseDto> update(@PathVariable Long id, @RequestBody @Valid PartyHouseForm partyHouseForm) {
+        PartyHouseDto partyHouseDto = partyHouseForm.update(id, partyHouseRepository);
+        return ResponseEntity.ok(partyHouseDto);
+    }
 }
