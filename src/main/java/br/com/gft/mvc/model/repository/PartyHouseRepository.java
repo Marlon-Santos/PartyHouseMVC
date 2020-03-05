@@ -11,5 +11,5 @@ public interface PartyHouseRepository extends JpaRepository<PartyHouse,Long> {
 
     public List<PartyHouse> findAllByOrderByNameDesc();
 
-    public Optional<PartyHouse> findByName(String name);
+    public Optional<PartyHouse> findByNameIgnoreCase(String name);
 }

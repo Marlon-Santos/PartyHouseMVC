@@ -1,5 +1,6 @@
 package br.com.gft.mvc.apiController.form;
 
+import br.com.gft.mvc.apiController.dto.EventDto;
 import br.com.gft.mvc.enums.MusicStyle;
 import br.com.gft.mvc.model.entity.Event;
 import br.com.gft.mvc.model.entity.PartyHouse;
@@ -8,6 +9,7 @@ import br.com.gft.mvc.model.repository.PartyHouseRepository;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 public class EventForm {
     private String eventName;
@@ -18,16 +20,40 @@ public class EventForm {
     private String link;
     private String partyHouse;
 
-    public Event event(PartyHouseRepository partyHouseRepository) {
-        MusicStyle style = null;
+    public Event converter(PartyHouseRepository partyHouseRepository) {
+        return new Event(eventName, capacity, date, price, stingToMusicStyle(), link, stingToPartyHouse(partyHouseRepository));
+    }
+
+    public PartyHouse stingToPartyHouse(PartyHouseRepository partyHouseRepository) {
+        Optional<PartyHouse> partyHouse = partyHouseRepository.findByNameIgnoreCase(this.partyHouse);
+        if (partyHouse.isPresent()) {
+            return partyHouse.get();
+        }
+        return null;
+    }
+
+    public MusicStyle stingToMusicStyle() {
         for (MusicStyle test : MusicStyle.values()) {
             if (test.getMusicStyle().toLowerCase().trim() == musicStyle.toLowerCase().trim()) {
-                style = test;
+                return test;
             }
         }
-//        PartyHouse partyHouse = partyHouseRepository.findByName(this.partyHouse);
+        return null;
+    }
 
-        return new Event();
+    public EventDto update(Long id, EventRepository eventRepository, PartyHouseRepository partyHouseRepository) {
+        Optional<Event> event = eventRepository.findById(id);
+        if (event.isPresent()) {
+            event.get().setEventName(eventName);
+            event.get().setCapacity(capacity);
+            event.get().setDate(date);
+            event.get().setPrice(price);
+            event.get().setMusicStyle(stingToMusicStyle());
+            event.get().setLink(link);
+            event.get().setPartyHouse(stingToPartyHouse(partyHouseRepository));
+            return new EventDto(event.get());
+        }
+        return null;
     }
 
     public String getEventName() {
@@ -98,4 +124,6 @@ public class EventForm {
     public int hashCode() {
         return Objects.hash(eventName);
     }
+
+
 }

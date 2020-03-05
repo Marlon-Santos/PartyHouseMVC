@@ -1,59 +1,131 @@
 package br.com.gft.mvc.apiController;
 
 import br.com.gft.mvc.apiController.dto.EventDto;
+import br.com.gft.mvc.apiController.form.EventForm;
 import br.com.gft.mvc.model.entity.Event;
 import br.com.gft.mvc.model.repository.EventRepository;
 import br.com.gft.mvc.model.repository.PartyHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/eventos")
 public class eventApiController {
     @Autowired
-    private EventRepository eventRepository;
-    @Autowired
     private PartyHouseRepository partyHouseRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     @GetMapping
-    public List<EventDto> eventList() {
+    public List<EventDto> eventsList() {
         List<Event> events = eventRepository.findAll();
         return EventDto.converter(events);
     }
 
-    @GetMapping("{id}")
-    public ModelAndView edit(@PathVariable Long id) {
-        ModelAndView mv = new ModelAndView("eventEdit");
-        Optional<Event> event = eventRepository.findById(id);
-        event.ifPresent(event1 -> {
-            mv.addObject("id",id);
-            mv.addObject("event",event1);
-        });
-        return mv;
-    }
-
-    @GetMapping("del/{id}")
-    public RedirectView delete(@PathVariable Long id){
-        eventRepository.delete(eventRepository.findById(id).get());
-        return new RedirectView("http://localhost:8080/event");
-    }
-
     @PostMapping
-    public RedirectView save(Event event)  {
+    @Transactional
+    public ResponseEntity<EventDto> save(@RequestBody @Valid EventForm eventForm, UriComponentsBuilder uriBuilder) {
+        Event event = eventForm.converter(partyHouseRepository);
         eventRepository.save(event);
-       return new RedirectView("http://localhost:8080/event");
+        URI uri = uriBuilder.path("{id}").buildAndExpand(event.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EventDto(event));
     }
 
-    @PostMapping("{id}")
-    public RedirectView edit(@PathVariable Long id, Event event) {
-        event.setId(id);
-        eventRepository.save(event);
-        return new RedirectView("http://localhost:8080/event");
+    @GetMapping("{id}")
+    public EventDto findById(@PathVariable Long id) {
+        Optional<Event> event = eventRepository.findById(id);
+        if (event.isPresent()) {
+            return new EventDto(event.get());
+        } else {
+            return null;
+        }
     }
+
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity<EventDto> update(@PathVariable Long id, @RequestBody @Valid EventForm eventForm) {
+        EventDto eventDto = eventForm.update(id, eventRepository, partyHouseRepository);
+        return ResponseEntity.ok(eventDto);
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<Event> event = eventRepository.findById(id);
+        if (event.isPresent()) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/nome/{name}")
+    public EventDto findByName(@PathVariable String name) {
+        Optional<Event> event = eventRepository.findByEventNameIgnoreCase(name);
+        if (event.isPresent()) {
+            return new EventDto(event.get());
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/capacidade/asc")
+    public List<EventDto> findAllByCapacityAsc() {
+        List<Event> events = eventRepository.findAllByOrderByCapacityAsc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/capacidade/desc")
+    public List<EventDto> findAllByCapacityDesc() {
+        List<Event> events = eventRepository.findAllByOrderByCapacityDesc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/data/asc")
+    public List<EventDto> findAllByDateAsc() {
+        List<Event> events = eventRepository.findAllByOrderByDateAsc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/data/desc")
+    public List<EventDto> findAllByDateDesc() {
+        List<Event> events = eventRepository.findAllByOrderByDateDesc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/nome/asc")
+    public List<EventDto> findAllByEventNameAsc() {
+        List<Event> events = eventRepository.findAllByOrderByEventNameAsc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/nome/desc")
+    public List<EventDto> findAllByEventNameDesc() {
+        List<Event> events = eventRepository.findAllByOrderByEventNameDesc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/preco/asc")
+    public List<EventDto> findAllByPriceAsc() {
+        List<Event> events = eventRepository.findAllByOrderByPriceAsc();
+        return EventDto.converter(events);
+    }
+
+    @GetMapping("/preco/desc")
+    public List<EventDto> findAllByPriceDesc() {
+        List<Event> events = eventRepository.findAllByOrderByPriceDesc();
+        return EventDto.converter(events);
+    }
+
 
 }

@@ -39,7 +39,7 @@ public class partyHouseApiController {
 
     @GetMapping("/nome/{name}")
     public PartyHouseDto findByName(@PathVariable String name) {
-        Optional<PartyHouse> partyHouse = partyHouseRepository.findByName(name);
+        Optional<PartyHouse> partyHouse = partyHouseRepository.findByNameIgnoreCase(name);
         if (partyHouse.isPresent()) {
             return new PartyHouseDto(partyHouse.get());
         } else {
