@@ -73,8 +73,6 @@ public class singUpController {
             mv.addObject("user", activateCode);
              return mv;
         }
-        System.out.println("entrouuuuuuuuuuuuuuuuuuuuuuuuu");
-        return new ModelAndView("redirect:/login.html");
-//        return "redirect:/login";
+        return new ModelAndView("login");
     }
 }
