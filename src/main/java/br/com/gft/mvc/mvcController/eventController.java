@@ -39,21 +39,21 @@ public class eventController {
     }
 
     @GetMapping("del/{id}")
-    public RedirectView delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id){
         eventRepository.delete(eventRepository.findById(id).get());
-        return new RedirectView("http://localhost:8080/event");
+        return "redirect:/event";
     }
 
     @PostMapping
-    public RedirectView save(Event event)  {
+    public String save(Event event)  {
         eventRepository.save(event);
-       return new RedirectView("http://localhost:8080/event");
+        return "redirect:/event";
     }
     @PostMapping("{id}")
-    public RedirectView edit(@PathVariable Long id, Event event) {
+    public String edit(@PathVariable Long id, Event event) {
         event.setId(id);
         eventRepository.save(event);
-        return new RedirectView("http://localhost:8080/event");
+        return "redirect:/event";
     }
 
     @ModelAttribute("musicStyle")

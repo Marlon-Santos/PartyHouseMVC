@@ -59,12 +59,12 @@
                     <td scope="row" th:text="${house.name}"></td>
                     <td scope="row" th:text="${house.address}"></td>
                     <td scope="row">
-                        <a th:href="@{http://localhost:8080/casaDeShow/{id}(id=${house.id})}"><button type="button" class="btn btn-info">Editar</button></a
+                        <a th:href="@{https://showpartymanager.herokuapp.com/casaDeShow/{id}(id=${house.id})}"><button type="button" class="btn btn-info">Editar</button></a
               >
             </td>
             <td scope="row">
               <a
-                th:href="@{http://localhost:8080/casaDeShow/del/{id}(id=${house.id})}"
+                th:href="@{https://showpartymanager.herokuapp.com/casaDeShow/del/{id}(id=${house.id})}"
                 ><button type="button" class="btn btn-danger">
                   Excluir
                 </button></a

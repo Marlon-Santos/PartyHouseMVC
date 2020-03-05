@@ -31,7 +31,7 @@ public class homeController {
     }
 
     @PostMapping("/sales")
-    public RedirectView sales(Long id, int qtd) {
+    public String sales(Long id, int qtd) {
         Optional<Event> event = eventRepository.findById(id);
         event.ifPresent(event1 -> {
             if (event1.getCapacity() - qtd >= 0) {
@@ -39,7 +39,7 @@ public class homeController {
                 eventRepository.save(event1);
             }
         });
-        return new RedirectView("http://localhost:8080");
+        return "redirect:/";
     }
 
 }

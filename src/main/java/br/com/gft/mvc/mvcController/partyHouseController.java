@@ -25,9 +25,9 @@ public class partyHouseController {
     }
 
     @PostMapping
-    public RedirectView save(PartyHouse partyHouse){
+    public String save(PartyHouse partyHouse){
         partyHouseRepository.save(partyHouse);
-        return new RedirectView("http://localhost:8080/casaDeShow");
+        return "redirect:/casaDeShow";
     }
 
     @GetMapping("{id}")
@@ -41,16 +41,16 @@ public class partyHouseController {
         return mv;
     }
     @GetMapping("del/{id}")
-    public RedirectView delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id){
         partyHouseRepository.delete(partyHouseRepository.findById(id).get());
-        return new RedirectView("http://localhost:8080/casaDeShow");
+        return "redirect:/casaDeShow";
     }
 
     @PostMapping("{id}")
-    public RedirectView update(@PathVariable Long id, PartyHouse partyHouse){
+    public String update(@PathVariable Long id, PartyHouse partyHouse){
         partyHouse.setId(id);
         partyHouseRepository.save(partyHouse);
-        return new RedirectView("http://localhost:8080/casaDeShow");
+        return "redirect:/casaDeShow";
     }
     @ModelAttribute("houses")
     public List<PartyHouse> houses(){
