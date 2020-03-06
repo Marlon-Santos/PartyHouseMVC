@@ -10,24 +10,40 @@
   </head>
 
   <body>
-    <header>
-      <div>Gerenciador de Eventos</div>
-      <ul>
-        <a href="/">
-          <li>Home</li>
-        </a>
-        <a href="/casaDeShow">
-          <li>Casa de Show</li>
-        </a>
-        <a href="/event">
-          <li>Eventos</li>
-        </a>
-        <a href="/historic">
-          <li>historico</li>
-        </a>
-      </ul>
+  <header sec:authorize="hasRole('ADMIN')">
+    <div>Gerenciador de Eventos</div>
+    <ul>
+      <a href="/">
+        <li>Home</li>
+      </a>
+      <a href="/casaDeShow">
+        <li>Casa de Show</li>
+      </a>
+      <a href="/event">
+        <li>Eventos</li>
+      </a>
+      <a href="/historic">
+        <li>historico</li>
+      </a>
+    </ul>
+    <a href="/logout">
       <div>Logout</div>
-    </header>
+    </a>
+  </header>
+  <header sec:authorize="hasRole('USER')">
+    <div>Gerenciador de Eventos</div>
+    <ul>
+      <a href="/">
+        <li>Home</li>
+      </a>
+      <a href="/historic">
+        <li>historico</li>
+      </a>
+    </ul>
+    <a href="/logout">
+      <div>Logout</div>
+    </a>
+  </header>
     <form
       class="form-group col-6"
       method="post"
@@ -54,6 +70,7 @@
           class="form-control"
           id="capacity"
           aria-describedby="capacity"
+          min=1 max=99999
           name="capacity"
           th:value="${event.capacity}"
         />

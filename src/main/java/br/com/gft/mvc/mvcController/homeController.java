@@ -32,9 +32,10 @@ public class homeController {
         List<Event> event = eventRepository.findAll();
         mv.addObject("events", event);
 //        MusicStyle.valueOf("musicStyle");
-        for(MusicStyle test : MusicStyle.values()){
+        for (MusicStyle test : MusicStyle.values()) {
             System.out.println(test.getMusicStyle());
-        };
+        }
+        ;
         return mv;
     }
 
@@ -42,11 +43,13 @@ public class homeController {
     public String sales(Long id, int qtd) {
         Optional<Event> event = eventRepository.findById(id);
         event.ifPresent(event1 -> {
-            if (event1.getCapacity() - qtd >= 0) {
-                Ticket ticket = new Ticket(event1,(long)qtd,userRepository);
-                event1.setCapacity(event1.getCapacity() - qtd);
-                eventRepository.save(event1);
-                ticketRepository.save(ticket);
+            if (qtd > 0) {
+                if (event1.getCapacity() - qtd >= 0) {
+                    Ticket ticket = new Ticket(event1, (long) qtd, userRepository);
+                    event1.setCapacity(event1.getCapacity() - qtd);
+                    eventRepository.save(event1);
+                    ticketRepository.save(ticket);
+                }
             }
         });
         return "redirect:/";

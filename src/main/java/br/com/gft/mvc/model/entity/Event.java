@@ -19,6 +19,7 @@ public class Event {
     @NotNull
     private String eventName;
     @NotNull
+    @Min(value = 0,message = "not negative number")
     private Integer capacity;
     @NotNull
     @Temporal(TemporalType.DATE)

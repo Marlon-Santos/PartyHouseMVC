@@ -1,6 +1,7 @@
 package br.com.gft.mvc.model.entity;
 
 import br.com.gft.mvc.model.repository.UserRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,18 +18,22 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime time = LocalDateTime.now();
-    private LocalDate date = LocalDate.now();
     @ManyToOne
     private User user;
     private Long quantity;
     @ManyToOne
     private Event event;
+
     public Long getId() {
         return id;
     }
 
-    public Ticket(Event event,Long qtd, UserRepository userRepository) {
+    public Ticket() {
+    }
+
+    public Ticket(Event event, Long qtd, UserRepository userRepository) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByName(name);
         this.user = user;
@@ -54,14 +59,6 @@ public class Ticket {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public User getUser() {
