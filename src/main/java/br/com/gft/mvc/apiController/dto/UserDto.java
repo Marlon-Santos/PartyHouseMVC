@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserDto {
+    private Long id;
     private String login;
     private String name;
     private String role;
 
     public UserDto(User user) {
+        this.id = user.getId();
         this.login = user.getLogin();
         this.name = user.getName();
         this.role = user.getRole().getRole();
@@ -42,5 +44,13 @@ public class UserDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +34,8 @@ public class Event {
     @NotNull
     @ManyToOne
     private PartyHouse partyHouse;
+    @OneToMany(mappedBy = "event")
+    private List<Ticket> tickets;
 
     public Event() {
     }
@@ -77,6 +80,14 @@ public class Event {
 
     public String getLink() {
         return link;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public void setLink(String link) {

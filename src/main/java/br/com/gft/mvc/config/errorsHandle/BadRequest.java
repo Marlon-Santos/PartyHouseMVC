@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.MethodNotAllowedException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestControllerAdvice
@@ -34,10 +36,10 @@ public class BadRequest {
         });
         return errors;
     }
-//    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-//    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-//    public String handleNot(HttpRequestMethodNotSupportedException exception) {
-//
-//        return messageSource.getMessage(new FieldError("testobject","testfield",exception.getSupportedMethods()[]), LocaleContextHolder.getLocale());
-//    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public BadRequestDto handleNot(NumberFormatException exception) {
+        String message = exception.getMessage();
+        return new BadRequestDto("this input need to a number",message);
+    }
 }
