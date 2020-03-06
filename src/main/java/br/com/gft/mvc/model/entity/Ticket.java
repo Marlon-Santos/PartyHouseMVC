@@ -18,7 +18,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern ="dd-MM-yyyy HH:mm:ss")
     private LocalDateTime time = LocalDateTime.now();
     @ManyToOne
     private User user;
