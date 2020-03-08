@@ -1,5 +1,6 @@
 package br.com.gft.mvc.apiController.dto;
 
+import br.com.gft.mvc.enums.MusicStyle;
 import br.com.gft.mvc.model.entity.Event;
 import java.util.Date;
 import java.util.List;

@@ -14,25 +14,18 @@ import java.util.Objects;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private Long id;
-    @NotNull
     private String eventName;
-    @NotNull
     @Min(value = 0,message = "not negative number")
     private Integer capacity;
-    @NotNull
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    @NotNull
     @NumberFormat(pattern = "#,##0.00")
     private Double price;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private MusicStyle musicStyle;
     private String link;
-    @NotNull
     @ManyToOne
     private PartyHouse partyHouse;
     @OneToMany(mappedBy = "event")

@@ -26,6 +26,7 @@ public class EventForm {
 
     public PartyHouse stingToPartyHouse(PartyHouseRepository partyHouseRepository) {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findByNameIgnoreCase(this.partyHouse);
+        System.out.println("<<<<<<<<<<<<<<<<<<<<<>>>>>"+partyHouse.get().getName());
         if (partyHouse.isPresent()) {
             return partyHouse.get();
         }
@@ -34,10 +35,13 @@ public class EventForm {
 
     public MusicStyle stingToMusicStyle() {
         for (MusicStyle test : MusicStyle.values()) {
-            if (test.getMusicStyle().toLowerCase().trim() == musicStyle.toLowerCase().trim()) {
+            System.out.println(test.getMusicStyle().toLowerCase().trim() +"==" +musicStyle.toLowerCase().trim());
+            if (test.getMusicStyle().toLowerCase().trim().equals(musicStyle.toLowerCase().trim())) {
+                System.out.println("<<<<<<<<<<<<<<EEEEN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+test);
                 return test;
             }
         }
+        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+musicStyle);
         return null;
     }
 

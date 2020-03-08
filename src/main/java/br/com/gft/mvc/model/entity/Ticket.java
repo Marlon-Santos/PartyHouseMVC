@@ -1,6 +1,8 @@
 package br.com.gft.mvc.model.entity;
 
 import br.com.gft.mvc.model.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +20,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @DateTimeFormat(pattern ="dd-MM-yyyy HH:mm:ss")
+    @DateTimeFormat(pattern ="dd/MM/yyyy HH:mm:ss")
     private LocalDateTime time = LocalDateTime.now();
     @ManyToOne
     private User user;

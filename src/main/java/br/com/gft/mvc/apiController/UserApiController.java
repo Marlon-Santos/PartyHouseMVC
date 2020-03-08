@@ -27,7 +27,8 @@ public class UserApiController {
     public ResponseEntity<List<UserDto>> listUsers() {
         List<User> users = userRepository.findAll();
         if (users.size() > 0) {
-            return ResponseEntity.ok(UserDto.converter(users));
+            List<UserDto> userDto = UserDto.converter(users);
+            return ResponseEntity.ok(userDto);
         }
         return ResponseEntity.notFound().build();
     }

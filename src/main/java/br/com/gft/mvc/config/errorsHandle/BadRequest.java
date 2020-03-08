@@ -40,6 +40,6 @@ public class BadRequest {
     @ExceptionHandler(NumberFormatException.class)
     public BadRequestDto handleNot(NumberFormatException exception) {
         String message = exception.getMessage();
-        return new BadRequestDto("this input need to a number",message);
+        return new BadRequestDto("this entry only accepts numbers",message);
     }
 }
