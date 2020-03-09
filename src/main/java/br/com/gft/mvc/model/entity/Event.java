@@ -15,18 +15,25 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
+    @NotEmpty
     private String eventName;
     @Min(value = 0,message = "not negative number")
+    @NotNull
     private Integer capacity;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private Date date;
     @NumberFormat(pattern = "#,##0.00")
+    @NotNull
     private Double price;
     @Enumerated(EnumType.STRING)
+    @NotNull
     private MusicStyle musicStyle;
     private String link;
     @ManyToOne
+    @NotNull
     private PartyHouse partyHouse;
     @OneToMany(mappedBy = "event")
     private List<Ticket> tickets;

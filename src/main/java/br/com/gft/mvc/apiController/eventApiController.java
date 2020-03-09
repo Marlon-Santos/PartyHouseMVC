@@ -34,7 +34,7 @@ public class eventApiController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<EventDto> save(@RequestBody EventForm eventForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<EventDto> save(@RequestBody @Valid EventForm eventForm, UriComponentsBuilder uriBuilder) {
         Event event = eventForm.converter(partyHouseRepository);
         eventRepository.save(event);
         URI uri = uriBuilder.path("{id}").buildAndExpand(event.getId()).toUri();

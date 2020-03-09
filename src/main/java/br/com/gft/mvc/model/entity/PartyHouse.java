@@ -13,8 +13,10 @@ public class PartyHouse {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
+    @NotEmpty
     private String name;
     @NotNull
+    @NotEmpty
     private String address;
     @OneToMany(mappedBy = "partyHouse",cascade = CascadeType.ALL)
     private List<Event> event;

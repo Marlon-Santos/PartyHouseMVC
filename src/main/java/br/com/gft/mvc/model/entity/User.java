@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,30 +18,36 @@ import java.util.Objects;
 
 @Entity
 public class User implements UserDetails {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
+    @NotEmpty
     private String login;
     @NotNull
+    @NotEmpty
     private String name;
     @NotNull
+    @NotEmpty
     private String password;
     @Enumerated(EnumType.STRING)
     @NotNull
     private Roles role = Roles.USER;
     @NotNull
+    @NotEmpty
     private Integer isActive = 1;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @NotEmpty
     private List<Ticket> tickets;
+
     public Long getId() {
         return id;
     }
 
-
-
     public void setId(Long id) {
         this.id = id;
     }
+
     public Roles getRole() {
         return role;
     }

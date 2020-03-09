@@ -3,8 +3,10 @@ package br.com.gft.mvc.security;
 import br.com.gft.mvc.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,8 +21,8 @@ class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/login/**", "/login-error","/codVerificator/**", "/singUp/**", "/css/**","/images/**").permitAll()
-                .antMatchers("/api/**").permitAll()
                 .antMatchers("/","/sales","/historic").hasAnyRole("ADMIN","USER")
+//                .antMatchers(HttpMethod.GET,"/api/eventos""/api/users","/api/casas").hasAnyRole("ADMIN","USER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
@@ -28,6 +30,11 @@ class Security extends WebSecurityConfigurerAdapter {
                 .and().oauth2Login().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
                 .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll()
                 .and().httpBasic();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**.html","/v2/api-docs","/webjars/**","/configuration/**","/swagger-resources/**");
     }
 
     @Override
