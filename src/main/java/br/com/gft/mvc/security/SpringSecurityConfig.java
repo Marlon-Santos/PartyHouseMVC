@@ -22,7 +22,7 @@ class Security extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/login/**", "/login-error","/codVerificator/**", "/singUp/**", "/css/**","/images/**").permitAll()
                 .antMatchers("/","/sales","/historic").hasAnyRole("ADMIN","USER")
-//                .antMatchers(HttpMethod.GET,"/api/eventos""/api/users","/api/casas").hasAnyRole("ADMIN","USER")
+               .antMatchers(HttpMethod.GET,"/api/eventos/**","/api/users/**","/api/casas/**","/api/vendas/**").hasAnyRole("ADMIN","USER")
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
