@@ -33,8 +33,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Roles role = Roles.USER;
-    @NotNull
-    @NotEmpty
     private Integer isActive = 1;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @NotEmpty
