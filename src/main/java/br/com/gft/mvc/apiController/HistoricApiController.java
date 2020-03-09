@@ -28,7 +28,6 @@ public class HistoricApiController {
         List<Ticket> tickets = ticketRepository.findAll();
         if (tickets.size() > 0) {
             List<HistoricDto> historic = HistoricDto.converter(tickets);
-            System.out.println(historic.size()+"tamanho da lista >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             return ResponseEntity.ok(historic);
         }
         return ResponseEntity.noContent().build();

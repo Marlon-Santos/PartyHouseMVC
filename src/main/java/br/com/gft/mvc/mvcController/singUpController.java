@@ -34,10 +34,6 @@ public class singUpController {
     @Transactional
     @PostMapping("/singUp")
     public ModelAndView newUser(User user, ActivateCode activateCode) {
-        //implementar add ADMIN pimeiro Acesso
-//        userRepository.findAllByRole(Roles.ADMIN).forEach(item -> System.out.println(item.getLogin() + ">>>>>>>>>" + item.getRole()));
-        //fazer validacao c ja nao existe
-
         UUID id = UUID.randomUUID();
         SendEmail sendEmail = new SendEmail(
                 user.getLogin(),
@@ -60,15 +56,12 @@ public class singUpController {
     @PostMapping("/codVerificator")
     public ModelAndView isValid(String login, String code, User user) {
         ActivateCode activateCode = codeRepository.findByLogin(login);
-        System.out.println(">>>>>>>>>>>>>>>>>>>.."+activateCode.getCode()+"=="+ code+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         if (activateCode.getCode().trim().equals(code.trim()) ){
             user.setLogin(activateCode.getLogin());
             user.setName(activateCode.getName());
             user.setPassword(activateCode.getPassword());
             userRepository.save(user);
-            System.out.println("code is valid!!!!");
         } else {
-            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<ENTRou no elseeeeeeeeeeelse>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             ModelAndView mv = new ModelAndView("codVerificator");
             mv.addObject("user", activateCode);
              return mv;

@@ -20,14 +20,14 @@ public class PartyHouseForm {
     public PartyHouse converter() {
         return new PartyHouse(name, address);
     }
-    public PartyHouseDto update(Long id, PartyHouseRepository partyHouseRepository){
+    public PartyHouseDto update(Long id, PartyHouseRepository partyHouseRepository) throws Exception {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findById(id);
         if(partyHouse.isPresent()){
             partyHouse.get().setName(name);
             partyHouse.get().setAddress(address);
             return new PartyHouseDto(partyHouse.get());
         }
-        return null;
+        throw new Exception("precisa de um id e parametros validos");
     }
 
     public String getName() {

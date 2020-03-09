@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/casas")
-public class partyHouseApiController {
+public class PartyHouseApiController {
     @Autowired
     private PartyHouseRepository partyHouseRepository;
 
@@ -28,22 +28,22 @@ public class partyHouseApiController {
     }
 
     @GetMapping("{id}")
-    public PartyHouseDto findById(@PathVariable Long id) {
+    public PartyHouseDto findById(@PathVariable Long id) throws Exception {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findById(id);
         if (partyHouse.isPresent()) {
             return new PartyHouseDto(partyHouse.get());
         } else {
-            return null;
+            throw new Exception("id nao encontrado");
         }
     }
 
     @GetMapping("/nome/{name}")
-    public PartyHouseDto findByName(@PathVariable String name) {
+    public PartyHouseDto findByName(@PathVariable String name) throws Exception {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findByNameIgnoreCase(name);
         if (partyHouse.isPresent()) {
             return new PartyHouseDto(partyHouse.get());
         } else {
-            return null;
+            throw new Exception("nome nao encontrado");
         }
     }
 
@@ -70,7 +70,7 @@ public class partyHouseApiController {
 
     @PutMapping("{id}")
     @Transactional
-    public ResponseEntity<PartyHouseDto> update(@PathVariable Long id, @RequestBody @Valid PartyHouseForm partyHouseForm) {
+    public ResponseEntity<PartyHouseDto> update(@PathVariable Long id, @RequestBody @Valid PartyHouseForm partyHouseForm) throws Exception {
         PartyHouseDto partyHouseDto = partyHouseForm.update(id, partyHouseRepository);
         return ResponseEntity.ok(partyHouseDto);
     }

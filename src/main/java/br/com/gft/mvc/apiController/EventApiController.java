@@ -20,7 +20,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api/eventos")
-public class eventApiController {
+public class EventApiController {
     @Autowired
     private PartyHouseRepository partyHouseRepository;
     @Autowired
@@ -34,7 +34,7 @@ public class eventApiController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<EventDto> save(@RequestBody @Valid EventForm eventForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<EventDto> save(@RequestBody @Valid EventForm eventForm, UriComponentsBuilder uriBuilder) throws Exception {
         Event event = eventForm.converter(partyHouseRepository);
         eventRepository.save(event);
         URI uri = uriBuilder.path("{id}").buildAndExpand(event.getId()).toUri();
@@ -42,18 +42,18 @@ public class eventApiController {
     }
 
     @GetMapping("{id}")
-    public EventDto findById(@PathVariable Long id) {
+    public EventDto findById(@PathVariable Long id) throws Exception {
         Optional<Event> event = eventRepository.findById(id);
         if (event.isPresent()) {
             return new EventDto(event.get());
         } else {
-            return null;
+            throw new Exception("id nao encontrado");
         }
     }
 
     @PutMapping("{id}")
     @Transactional
-    public ResponseEntity<EventDto> update(@PathVariable Long id, @RequestBody @Valid EventForm eventForm) {
+    public ResponseEntity<EventDto> update(@PathVariable Long id, @RequestBody @Valid EventForm eventForm) throws Exception {
         EventDto eventDto = eventForm.update(id, eventRepository, partyHouseRepository);
         return ResponseEntity.ok(eventDto);
     }
@@ -70,12 +70,12 @@ public class eventApiController {
     }
 
     @GetMapping("/nome/{name}")
-    public EventDto findByName(@PathVariable String name) {
+    public EventDto findByName(@PathVariable String name) throws Exception {
         Optional<Event> event = eventRepository.findByEventNameIgnoreCase(name);
         if (event.isPresent()) {
             return new EventDto(event.get());
         } else {
-            return null;
+            throw new Exception("nome nao encontrado");
         }
     }
 

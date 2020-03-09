@@ -30,12 +30,6 @@ public class homeController {
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("home");
         List<Event> event = eventRepository.findAll();
-        mv.addObject("events", event);
-//        MusicStyle.valueOf("musicStyle");
-        for (MusicStyle test : MusicStyle.values()) {
-            System.out.println(test.getMusicStyle());
-        }
-        ;
         return mv;
     }
 

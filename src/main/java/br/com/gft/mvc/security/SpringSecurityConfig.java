@@ -17,24 +17,25 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 class Security extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers("/login/**", "/login-error","/codVerificator/**", "/singUp/**", "/css/**","/images/**").permitAll()
-                .antMatchers("/","/sales","/historic").hasAnyRole("ADMIN","USER")
-               .antMatchers(HttpMethod.GET,"/api/eventos/**","/api/users/**","/api/casas/**","/api/vendas/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/login/**", "/login-error", "/codVerificator/**", "/singUp/**", "/css/**", "/images/**").permitAll()
+                .antMatchers("/", "/sales", "/historic").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/eventos/**", "/api/users/**", "/api/casas/**", "/api/vendas/**", "/api/estilos/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login").permitAll()
                 .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll()
-                .and().oauth2Login().loginPage("/login").defaultSuccessUrl("/",true).failureUrl("/login").permitAll()
+                .and().oauth2Login().loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login").permitAll()
                 .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).deleteCookies("JSESSIONID").logoutSuccessUrl("/login").permitAll()
                 .and().httpBasic();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**.html","/v2/api-docs","/webjars/**","/configuration/**","/swagger-resources/**");
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
 
     @Override

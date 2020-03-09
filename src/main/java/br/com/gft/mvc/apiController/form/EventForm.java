@@ -4,10 +4,8 @@ import br.com.gft.mvc.apiController.dto.EventDto;
 import br.com.gft.mvc.enums.MusicStyle;
 import br.com.gft.mvc.model.entity.Event;
 import br.com.gft.mvc.model.entity.PartyHouse;
-import br.com.gft.mvc.model.entity.Ticket;
 import br.com.gft.mvc.model.repository.EventRepository;
 import br.com.gft.mvc.model.repository.PartyHouseRepository;
-import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -16,7 +14,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -43,32 +40,28 @@ public class EventForm {
     private String partyHouse;
 
 
-    public Event converter(PartyHouseRepository partyHouseRepository) {
+    public Event converter(PartyHouseRepository partyHouseRepository) throws Exception {
         return new Event(eventName, capacity, date, price, stingToMusicStyle(), link, stingToPartyHouse(partyHouseRepository));
     }
 
-    public PartyHouse stingToPartyHouse(PartyHouseRepository partyHouseRepository) {
+    public PartyHouse stingToPartyHouse(PartyHouseRepository partyHouseRepository) throws Exception {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findByNameIgnoreCase(this.partyHouse);
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<>>>>>" + partyHouse.get().getName());
         if (partyHouse.isPresent()) {
             return partyHouse.get();
         }
-        return null;
+        throw new Exception("precisa ter uma casa de show valida cadastrada, consulte o nome das casas em api/casas");
     }
 
-    public MusicStyle stingToMusicStyle() {
+    public MusicStyle stingToMusicStyle() throws Exception {
         for (MusicStyle test : MusicStyle.values()) {
-            System.out.println(test.getMusicStyle().toLowerCase().trim() + "==" + musicStyle.toLowerCase().trim());
             if (test.getMusicStyle().toLowerCase().trim().equals(musicStyle.toLowerCase().trim())) {
-                System.out.println("<<<<<<<<<<<<<<EEEEN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + test);
                 return test;
             }
         }
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" + musicStyle);
-        return null;
+        throw new Exception("precisa ter um estilo musical valido, consulte os estilos aceitos em api/estilos");
     }
 
-    public EventDto update(Long id, EventRepository eventRepository, PartyHouseRepository partyHouseRepository) {
+    public EventDto update(Long id, EventRepository eventRepository, PartyHouseRepository partyHouseRepository) throws Exception {
         Optional<Event> event = eventRepository.findById(id);
         if (event.isPresent()) {
             event.get().setEventName(eventName);
@@ -80,7 +73,7 @@ public class EventForm {
             event.get().setPartyHouse(stingToPartyHouse(partyHouseRepository));
             return new EventDto(event.get());
         }
-        return null;
+        throw new Exception("precisa de um id e parametros validos");
     }
 
     public String getEventName() {

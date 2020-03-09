@@ -42,4 +42,11 @@ public class BadRequest {
         String message = exception.getMessage();
         return new BadRequestDto("this entry only accepts numbers",message);
     }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(java.lang.Exception.class)
+    public BadRequestDto handleNot(java.lang.Exception exception) {
+        String message = exception.getMessage();
+        return new BadRequestDto("exception",message);
+    }
+
 }
