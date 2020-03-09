@@ -35,7 +35,6 @@ public class User implements UserDetails {
     private Roles role = Roles.USER;
     private Integer isActive = 1;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @NotEmpty
     private List<Ticket> tickets;
 
     public Long getId() {
