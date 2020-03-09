@@ -30,6 +30,7 @@ public class homeController {
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("home");
         List<Event> event = eventRepository.findAll();
+        mv.addObject("events", event);
         return mv;
     }
 
