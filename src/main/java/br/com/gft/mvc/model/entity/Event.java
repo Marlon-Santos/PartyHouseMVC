@@ -35,7 +35,7 @@ public class Event {
     @ManyToOne
     @NotNull
     private PartyHouse partyHouse;
-    @OneToMany(mappedBy = "event", orphanRemoval = true)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
     public Event() {
