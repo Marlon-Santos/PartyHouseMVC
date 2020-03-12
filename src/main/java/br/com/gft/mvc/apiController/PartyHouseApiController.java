@@ -80,6 +80,7 @@ public class PartyHouseApiController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<PartyHouse> partyHouse = partyHouseRepository.findById(id);
         if (partyHouse.isPresent()) {
+            partyHouseRepository.delete(partyHouse.get());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

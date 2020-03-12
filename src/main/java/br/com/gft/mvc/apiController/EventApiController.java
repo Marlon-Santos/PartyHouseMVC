@@ -63,6 +63,7 @@ public class EventApiController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<Event> event = eventRepository.findById(id);
         if (event.isPresent()) {
+            eventRepository.delete(event.get());
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
