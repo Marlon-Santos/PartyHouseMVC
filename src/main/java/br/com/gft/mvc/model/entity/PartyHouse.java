@@ -20,7 +20,6 @@ public class PartyHouse {
     private String address;
     @OneToMany(mappedBy = "partyHouse",cascade = CascadeType.ALL)
     private List<Event> event;
-
     public PartyHouse() {
     }
 
